@@ -1,0 +1,29 @@
+{
+  "name": "lecture",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack --mode development",
+    "dev": "webpack serve --env development",
+    "assets": "webpack --config webpack.config.js --mode development"
+  },
+  "author": "tk",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.24.0",
+    "@babel/preset-env": "^7.24.0",
+    "@babel/preset-env preset-react": "^7.24.0",
+    "@babel/node": "^7.23.9",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
+    "react-refresh": "^0.14.0",
+    "webpack": "^5.90.3",
+    "webpack-cli": "^7.23.9",
+    "webpack-dev-server": "^5.0.3"
+  },
+  "dependencies": {
+    "babel-loader": "^9.1.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

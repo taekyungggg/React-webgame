@@ -1,0 +1,55 @@
+<html>
+  <head> </head>
+  <body>
+    <div id="root"></div>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <!--<script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>-->
+    <!--<script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>-->
+    <script>
+      "use strict";
+
+      const e = React.createElement;
+
+      class LikeButton extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = { liked: false };
+        }
+
+        render() {
+          //이게 True면, 눌렀으면 you like this 텍스트를 보여주고
+          if (this.state.liked) {
+            return "You liked this.";
+          }
+
+          // 그게 아니면 버튼을 보여줘라
+          return e(
+            "button",
+            { onClick: () => this.setState({ liked: true }) },
+            "Like"
+          );
+
+          /*
+      주의점
+      1. 객체를 함부로 바꾸지 말것
+      ex) concat, slice와 같이 새로운 배열을 만드는 함수 위주로 쓸 것.
+      push, shift, unshift, pop은 배열을 '직접' 수정하므로 지양해야 한다.
+
+      2. 객체를 바꿀때는 setState를 사용할 것
+  
+      */
+        }
+      }
+    </script>
+    <script>
+      ReactDOM.render(e(LikeButton), document.querySelector("#root"));
+    </script>
+  </body>
+</html>
