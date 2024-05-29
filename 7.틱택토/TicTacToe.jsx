@@ -1,21 +1,21 @@
-import React, { useEffect, useReducer, useCallback } from 'react';
-import Table from './Table';
+import React, { useEffect, useReducer, useCallback } from "react";
+import Table from "./Table";
 
 const initialState = {
-  winner: '',
-  turn: 'O',
+  winner: "",
+  turn: "O",
   tableData: [
-    ['', '', ''],
-    ['', '', ''],
-    ['', '', ''],
+    ["", "", ""],
+    ["", "", ""],
+    ["", "", ""],
   ],
   recentCell: [-1, -1],
 };
 
-export const SET_WINNER = 'SET_WINNER';
-export const CLICK_CELL = 'CLICK_CELL';
-export const CHANGE_TURN = 'CHANGE_TURN';
-export const RESET_GAME = 'RESET_GAME';
+export const SET_WINNER = "SET_WINNER";
+export const CLICK_CELL = "CLICK_CELL";
+export const CHANGE_TURN = "CHANGE_TURN";
+export const RESET_GAME = "RESET_GAME";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -38,17 +38,17 @@ const reducer = (state, action) => {
     case CHANGE_TURN: {
       return {
         ...state,
-        turn: state.turn === 'O' ? 'X' : 'O',
+        turn: state.turn === "O" ? "X" : "O",
       };
     }
     case RESET_GAME: {
       return {
         ...state,
-        turn: 'O',
+        turn: "O",
         tableData: [
-          ['', '', ''],
-          ['', '', ''],
-          ['', '', ''],
+          ["", "", ""],
+          ["", "", ""],
+          ["", "", ""],
         ],
         recentCell: [-1, -1],
       };
@@ -66,41 +66,62 @@ const TicTacToe = () => {
   // const [tableData, setTableData] = useState([['', '', ''], ['', '', ''], ['', '', '']]);
 
   const onClickTable = useCallback(() => {
-    dispatch({ type: SET_WINNER, winner: 'O' });
+    dispatch({ type: SET_WINNER, winner: "O" });
   }, []);
 
   useEffect(() => {
+    //셀 하나 클릭할 때마다 빙고인지 검사
     const [row, cell] = recentCell;
     if (row < 0) {
       return;
     }
     let win = false;
-    if (tableData[row][0] === turn && tableData[row][1] === turn && tableData[row][2] === turn) {
+    if (
+      tableData[row][0] === turn &&
+      tableData[row][1] === turn &&
+      tableData[row][2] === turn
+    ) {
       win = true;
     }
-    if (tableData[0][cell] === turn && tableData[1][cell] === turn && tableData[2][cell] === turn) {
+    if (
+      tableData[0][cell] === turn &&
+      tableData[1][cell] === turn &&
+      tableData[2][cell] === turn
+    ) {
       win = true;
     }
-    if (tableData[0][0] === turn && tableData[1][1] === turn && tableData[2][2] === turn) {
+    if (
+      tableData[0][0] === turn &&
+      tableData[1][1] === turn &&
+      tableData[2][2] === turn
+    ) {
       win = true;
     }
-    if (tableData[0][2] === turn && tableData[1][1] === turn && tableData[2][0] === turn) {
+    if (
+      tableData[0][2] === turn &&
+      tableData[1][1] === turn &&
+      tableData[2][0] === turn
+    ) {
       win = true;
     }
     console.log(win, row, cell, tableData, turn);
-    if (win) { // 승리시
+    if (win) {
+      // 승리시
       dispatch({ type: SET_WINNER, winner: turn });
       dispatch({ type: RESET_GAME });
     } else {
-      let all = true; // all이 true면 무승부라는 뜻
-      tableData.forEach((row) => { // 무승부 검사
+      let all = true; // all이 true면 무승부라는 뜻 (모든 셀이 차 있는 상태)
+      tableData.forEach((row) => {
+        // 무승부 검사
         row.forEach((cell) => {
           if (!cell) {
+            //하나라도 빈 셀이 있으면 무승부가 아니다 (결판이 아직 안 났으니까)
             all = false;
           }
         });
       });
       if (all) {
+        //무승부라면 reset하거나 다음턴으로 넘겨주기
         dispatch({ type: SET_WINNER, winner: null });
         dispatch({ type: RESET_GAME });
       } else {
@@ -114,7 +135,7 @@ const TicTacToe = () => {
       <Table onClick={onClickTable} tableData={tableData} dispatch={dispatch} />
       {winner && <div>{winner}님의 승리</div>}
     </>
-  )
+  );
 };
 
 export default TicTacToe;
